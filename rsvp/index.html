@@ -148,6 +148,48 @@
   @media (min-width: 600px) {
     #main-content { padding-top: 4vh; }
   }
+
+  /* ---------- MUSIC TOGGLE ---------- */
+  #music-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 60;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid var(--turquoise);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform 0.15s ease, opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #music-toggle.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #music-toggle:active {
+    transform: scale(0.92);
+  }
+
+  #youtube-player-container {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -157,6 +199,14 @@
     <div class="loading-dots">
       <span></span><span></span><span></span>
     </div>
+  </div>
+
+  <!-- MUSIC TOGGLE -->
+  <div id="music-toggle">🔊</div>
+
+  <!-- Hidden YouTube player (audio source) -->
+  <div id="youtube-player-container">
+    <div id="youtube-player"></div>
   </div>
 
   <!-- ERROR SCREEN (shown if ?e= is missing or invalid) -->
@@ -181,7 +231,71 @@
     </div>
   </div>
 
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
+    let ytPlayer = null;
+    let ytReady = false;
+    let musicVideoId = null;
+    let userWantsMusic = true;
+
+    function onYouTubeIframeAPIReady() {
+      ytReady = true;
+      if (musicVideoId) {
+        createYtPlayer();
+      }
+    }
+
+    function createYtPlayer() {
+      ytPlayer = new YT.Player('youtube-player', {
+        height: '1',
+        width: '1',
+        videoId: musicVideoId,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          loop: 1,
+          playlist: musicVideoId,
+          playsinline: 1,
+          disablekb: 1,
+          modestbranding: 1
+        },
+        events: {
+          onReady: (e) => {
+            e.target.mute();
+            e.target.playVideo();
+            document.getElementById('music-toggle').classList.add('visible');
+          }
+        }
+      });
+    }
+
+    function tryUnmuteOnFirstInteraction() {
+      const unmuteOnce = () => {
+        if (ytPlayer && userWantsMusic) {
+          ytPlayer.unMute();
+          ytPlayer.playVideo();
+          document.getElementById('music-toggle').textContent = '🔊';
+        }
+        document.removeEventListener('click', unmuteOnce);
+        document.removeEventListener('touchend', unmuteOnce);
+      };
+      document.addEventListener('click', unmuteOnce);
+      document.addEventListener('touchend', unmuteOnce);
+    }
+
+    document.getElementById('music-toggle').addEventListener('click', () => {
+      if (!ytPlayer) return;
+      userWantsMusic = !userWantsMusic;
+      if (userWantsMusic) {
+        ytPlayer.unMute();
+        ytPlayer.playVideo();
+        document.getElementById('music-toggle').textContent = '🔊';
+      } else {
+        ytPlayer.mute();
+        document.getElementById('music-toggle').textContent = '🔇';
+      }
+    });
+
     (async function init() {
       const params = new URLSearchParams(window.location.search);
       const eventSlug = params.get('e');
@@ -220,6 +334,15 @@
       // Apply links
       document.getElementById('btn-confirmar').href = config.confirmarLink || '#';
       document.getElementById('btn-ubicacion').href = config.ubicacionLink || '#';
+
+      // Set up background music (if configured)
+      if (config.musicVideoId) {
+        musicVideoId = config.musicVideoId;
+        tryUnmuteOnFirstInteraction();
+        if (ytReady) {
+          createYtPlayer();
+        }
+      }
 
       // Apply images
       const bgUrl = basePath + config.background;

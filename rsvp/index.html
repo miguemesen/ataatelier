@@ -21,6 +21,43 @@
     overflow-x: hidden;
   }
 
+  /* ---------- MUSIC CHOICE SCREEN ---------- */
+  #music-choice-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background-color: #eaf6f4;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 10vw;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  #music-choice-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #music-choice-screen h2 {
+    color: #2c5f5a;
+    margin: 0 0 10px;
+    font-size: 20px;
+  }
+
+  .choice-buttons {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
   /* ---------- LOADING SCREEN ---------- */
   #loading-screen {
     position: fixed;
@@ -32,12 +69,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 0.6s ease;
   }
 
-  #loading-screen.hidden {
-    opacity: 0;
-    pointer-events: none;
+  #loading-screen.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .loading-dots {
@@ -120,6 +159,7 @@
     transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    cursor: pointer;
   }
 
   .btn:active,
@@ -149,7 +189,7 @@
     #main-content { padding-top: 4vh; }
   }
 
-  /* ---------- MUSIC TOGGLE ---------- */
+  /* ---------- MUSIC TOGGLE (while viewing invitation) ---------- */
   #music-toggle {
     position: fixed;
     top: 18px;
@@ -194,6 +234,15 @@
 </head>
 <body>
 
+  <!-- MUSIC CHOICE SCREEN (only shown when the event has music configured) -->
+  <div id="music-choice-screen">
+    <h2>¿Deseas continuar con música?</h2>
+    <div class="choice-buttons">
+      <button class="btn" id="btn-con-musica" type="button">CONTINUAR CON MÚSICA</button>
+      <button class="btn" id="btn-sin-musica" type="button">CONTINUAR SIN MÚSICA</button>
+    </div>
+  </div>
+
   <!-- LOADING SCREEN -->
   <div id="loading-screen">
     <div class="loading-dots">
@@ -237,6 +286,14 @@
     let ytReady = false;
     let musicVideoId = null;
     let userWantsMusic = true;
+    let assetsReady = false;
+    let choiceMade = false;
+
+    const musicChoiceScreen = document.getElementById('music-choice-screen');
+    const loadingScreen = document.getElementById('loading-screen');
+    const errorScreen = document.getElementById('error-screen');
+    const mainContent = document.getElementById('main-content');
+    const musicToggle = document.getElementById('music-toggle');
 
     function onYouTubeIframeAPIReady() {
       ytReady = true;
@@ -245,6 +302,9 @@
       }
     }
 
+    // Player is created muted+autoplaying in the background as soon as we know
+    // there's a song for this event, so it's already primed by the time the
+    // person taps "continuar con música" (no extra load delay at that point).
     function createYtPlayer() {
       ytPlayer = new YT.Player('youtube-player', {
         height: '1',
@@ -263,51 +323,72 @@
           onReady: (e) => {
             e.target.mute();
             e.target.playVideo();
-            document.getElementById('music-toggle').classList.add('visible');
           }
         }
       });
     }
 
-    function tryUnmuteOnFirstInteraction() {
-      const unmuteOnce = () => {
-        if (ytPlayer && userWantsMusic) {
-          ytPlayer.unMute();
-          ytPlayer.playVideo();
-          document.getElementById('music-toggle').textContent = '🔊';
-        }
-        document.removeEventListener('click', unmuteOnce);
-        document.removeEventListener('touchend', unmuteOnce);
-      };
-      document.addEventListener('click', unmuteOnce);
-      document.addEventListener('touchend', unmuteOnce);
+    function showError() {
+      musicChoiceScreen.classList.add('hidden');
+      loadingScreen.classList.remove('visible');
+      errorScreen.classList.add('visible');
     }
 
-    document.getElementById('music-toggle').addEventListener('click', () => {
+    function proceedPastChoiceScreen() {
+      if (choiceMade) return;
+      choiceMade = true;
+      musicChoiceScreen.classList.add('hidden');
+
+      if (assetsReady) {
+        showMainContent();
+      } else {
+        loadingScreen.classList.add('visible');
+      }
+    }
+
+    function showMainContent() {
+      loadingScreen.classList.remove('visible');
+      mainContent.classList.add('visible');
+      if (musicVideoId) {
+        musicToggle.classList.add('visible');
+      }
+    }
+
+    document.getElementById('btn-con-musica').addEventListener('click', () => {
+      userWantsMusic = true;
+      if (ytPlayer) {
+        ytPlayer.unMute();
+        ytPlayer.playVideo();
+      }
+      musicToggle.textContent = '🔊';
+      proceedPastChoiceScreen();
+    });
+
+    document.getElementById('btn-sin-musica').addEventListener('click', () => {
+      userWantsMusic = false;
+      if (ytPlayer) {
+        ytPlayer.pauseVideo();
+      }
+      musicToggle.textContent = '🔇';
+      proceedPastChoiceScreen();
+    });
+
+    musicToggle.addEventListener('click', () => {
       if (!ytPlayer) return;
       userWantsMusic = !userWantsMusic;
       if (userWantsMusic) {
         ytPlayer.unMute();
         ytPlayer.playVideo();
-        document.getElementById('music-toggle').textContent = '🔊';
+        musicToggle.textContent = '🔊';
       } else {
-        ytPlayer.mute();
-        document.getElementById('music-toggle').textContent = '🔇';
+        ytPlayer.pauseVideo();
+        musicToggle.textContent = '🔇';
       }
     });
 
     (async function init() {
       const params = new URLSearchParams(window.location.search);
       const eventSlug = params.get('e');
-
-      const loadingScreen = document.getElementById('loading-screen');
-      const errorScreen = document.getElementById('error-screen');
-      const mainContent = document.getElementById('main-content');
-
-      function showError() {
-        loadingScreen.classList.add('hidden');
-        errorScreen.classList.add('visible');
-      }
 
       if (!eventSlug) {
         showError();
@@ -335,15 +416,6 @@
       document.getElementById('btn-confirmar').href = config.confirmarLink || '#';
       document.getElementById('btn-ubicacion').href = config.ubicacionLink || '#';
 
-      // Set up background music (if configured)
-      if (config.musicVideoId) {
-        musicVideoId = config.musicVideoId;
-        tryUnmuteOnFirstInteraction();
-        if (ytReady) {
-          createYtPlayer();
-        }
-      }
-
       // Apply images
       const bgUrl = basePath + config.background;
       const loadingUrl = basePath + config.loadingScreen;
@@ -351,22 +423,34 @@
 
       document.getElementById('invitation-img').src = invitationUrl;
       loadingScreen.style.backgroundImage = `url('${loadingUrl}')`;
+      musicChoiceScreen.style.backgroundImage = `url('${loadingUrl}')`;
       mainContent.style.backgroundImage = `url('${bgUrl}')`;
 
-      // Preload background + invitation image, then reveal content
+      // If this event has a song, show the choice screen and start priming
+      // the (silent, muted) player in the background right away.
+      if (config.musicVideoId) {
+        musicVideoId = config.musicVideoId;
+        if (ytReady) {
+          createYtPlayer();
+        }
+      } else {
+        // No music configured for this event: skip the choice screen entirely.
+        choiceMade = true;
+        musicChoiceScreen.classList.add('hidden');
+        loadingScreen.classList.add('visible');
+      }
+
+      // Preload background + invitation image in parallel with the choice screen
       const imagesToPreload = [bgUrl, invitationUrl];
       let loadedCount = 0;
-
-      function showContent() {
-        loadingScreen.classList.add('hidden');
-        mainContent.classList.add('visible');
-        setTimeout(() => { loadingScreen.style.display = 'none'; }, 650);
-      }
 
       function onImageDone() {
         loadedCount++;
         if (loadedCount >= imagesToPreload.length) {
-          setTimeout(showContent, 400);
+          assetsReady = true;
+          if (choiceMade) {
+            showMainContent();
+          }
         }
       }
 
@@ -377,8 +461,13 @@
         img.src = src;
       });
 
-      // Safety fallback
-      setTimeout(showContent, 4000);
+      // Safety fallback in case something hangs
+      setTimeout(() => {
+        assetsReady = true;
+        if (choiceMade) {
+          showMainContent();
+        }
+      }, 6000);
     })();
   </script>
 

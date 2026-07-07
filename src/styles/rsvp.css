@@ -28,12 +28,9 @@ html, body {
   background-size: cover;
   background-position: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  padding: 10vw;
-  text-align: center;
+  padding: 8vw;
   transition: opacity 0.5s ease;
 }
 
@@ -42,18 +39,105 @@ html, body {
   pointer-events: none;
 }
 
-.music-choice-screen h2 {
-  color: #2c5f5a;
-  margin: 0 0 10px;
-  font-size: 20px;
+.music-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 28px;
+  overflow: visible;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+.music-card-header {
+  position: relative;
+  background-color: #FFF4A3;
+  border-radius: 28px 28px 0 0;
+  padding: 28px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.music-card-header h2 {
+  margin: 0;
+  color: #333333;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: clamp(30px, 8vw, 40px);
+}
+
+.music-card-gary {
+  position: absolute;
+  left: -6%;
+  bottom: -18%;
+  width: 26%;
+  max-width: 110px;
+  z-index: 2;
+}
+
+.music-card-coral {
+  position: absolute;
+  right: 4%;
+  bottom: -14%;
+  width: 16%;
+  max-width: 70px;
+  z-index: 2;
+}
+
+.music-card-coral-back {
+  right: 16%;
+  width: 13%;
+  max-width: 56px;
+  bottom: -10%;
+  opacity: 0.9;
+}
+
+.music-card-body {
+  background-color: #FFFCE6;
+  border-radius: 0 0 28px 28px;
+  padding: 26px 22px 28px;
+  text-align: center;
+}
+
+.music-card-body p {
+  margin: 0 0 20px;
+  color: #4d4d4d;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: clamp(18px, 4.6vw, 22px);
+  line-height: 1.35;
 }
 
 .choice-buttons {
   width: 100%;
-  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.music-choice-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+  color: #8ededa;
+  border: 3px solid #8ededa;
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: clamp(15px, 4.2vw, 18px);
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.music-choice-btn:active {
+  background-color: #8ededa;
+  color: #ffffff;
+  transform: scale(0.97);
 }
 
 .loading-screen {

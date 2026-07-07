@@ -73,21 +73,22 @@ html, body {
   width: 26%;
   max-width: 110px;
   z-index: 2;
+  transform: scaleX(-1);
 }
 
 .music-card-coral {
   position: absolute;
   right: 4%;
   bottom: -14%;
-  width: 16%;
-  max-width: 70px;
+  width: 24%;
+  max-width: 100px;
   z-index: 2;
 }
 
 .music-card-coral-back {
   right: 16%;
-  width: 13%;
-  max-width: 56px;
+  width: 19%;
+  max-width: 80px;
   bottom: -10%;
   opacity: 0.9;
 }

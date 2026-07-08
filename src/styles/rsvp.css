@@ -403,13 +403,13 @@ html, body {
 }
 
 .rsvp-modal-flower-top {
-  top: -16%;
-  left: -5%;
+  top: -14%;
+  left: -10%;
 }
 
 .rsvp-modal-flower-bottom {
-  bottom: -16%;
-  right: -5%;
+  bottom: -14%;
+  right: -10%;
 }
 
 .rsvp-modal-close {
@@ -424,6 +424,81 @@ html, body {
   cursor: pointer;
   padding: 4px;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- GUEST DETAILS FORM (inside modal-body) ---------- */
+.guest-form {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-form-label {
+  margin: 14px 0 8px;
+  color: #4d4d4d;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-body);
+  line-height: 1.35;
+}
+
+.guest-form-select,
+.guest-form-input,
+.guest-form-textarea {
+  width: 100%;
+  border: 1.5px solid #cfcfcf;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-overlay);
+  color: #333333;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.guest-form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 20px;
+}
+
+/* Placeholder text uses the light italic weight from the type scale */
+.guest-form-input::placeholder,
+.guest-form-textarea::placeholder {
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-light);
+  font-style: italic;
+  color: #999999;
+}
+
+.guest-form-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.guest-form-row .guest-form-input {
+  flex: 2;
+  min-width: 0;
+}
+
+.guest-form-row .guest-form-input-edad {
+  flex: 1;
+}
+
+.guest-form-textarea {
+  min-height: 90px;
+  resize: vertical;
+  margin-bottom: 6px;
+}
+
+.guest-form .modal-buttons {
+  margin-top: 18px;
 }
 
 /* ---------- POPPINS WEIGHT / STYLE UTILITIES ---------- */

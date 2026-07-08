@@ -1,4 +1,4 @@
-export default function RsvpConfirmModal({ visible, onClose, confirmarLink, declineLink, deadlineText }) {
+export default function RsvpConfirmModal({ visible, onClose, onConfirmYes, declineLink, deadlineText }) {
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
@@ -20,9 +20,9 @@ export default function RsvpConfirmModal({ visible, onClose, confirmarLink, decl
           </p>
 
           <div className="modal-buttons">
-            <a className="btn" href={confirmarLink || '#'} target="_blank" rel="noopener noreferrer">
+            <button type="button" className="btn" onClick={onConfirmYes}>
               SÍ, ASISTIRÉ
-            </a>
+            </button>
             <a className="btn" href={declineLink || '#'} target="_blank" rel="noopener noreferrer">
               NO PODRÉ ASISTIR
             </a>

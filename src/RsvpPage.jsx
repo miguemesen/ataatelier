@@ -10,6 +10,7 @@ import InvitationCard from './components/InvitationCard'
 import ActionButtons from './components/ActionButtons'
 import MusicToggle from './components/MusicToggle'
 import RsvpConfirmModal from './components/RsvpConfirmModal'
+import GuestDetailsModal from './components/GuestDetailsModal'
 
 export default function RsvpPage() {
   const { status, config, basePath } = useEventConfig()
@@ -17,6 +18,7 @@ export default function RsvpPage() {
   const [choiceMade, setChoiceMade] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(true)
   const [showRsvpModal, setShowRsvpModal] = useState(false)
+  const [showGuestDetailsModal, setShowGuestDetailsModal] = useState(false)
 
   const hasMusic = Boolean(config?.musicVideoId)
   const { playerReady, playUnmuted, pause } = useYoutubeMusic(config?.musicVideoId)
@@ -88,7 +90,7 @@ export default function RsvpPage() {
       />
 
       <div
-        className={`main-content ${showMainContent ? 'visible' : ''} ${showRsvpModal ? 'blurred' : ''}`}
+        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal) ? 'blurred' : ''}`}
         style={bgUrl ? { backgroundImage: `url('${bgUrl}')` } : undefined}
       >
         {config && (
@@ -106,9 +108,24 @@ export default function RsvpPage() {
         <RsvpConfirmModal
           visible={showRsvpModal}
           onClose={() => setShowRsvpModal(false)}
-          confirmarLink={config.confirmarLink}
+          onConfirmYes={() => {
+            setShowRsvpModal(false)
+            setShowGuestDetailsModal(true)
+          }}
           declineLink={config.declineLink}
           deadlineText={config.rsvpDeadline}
+        />
+      )}
+
+      {config && (
+        <GuestDetailsModal
+          visible={showGuestDetailsModal}
+          onClose={() => setShowGuestDetailsModal(false)}
+          maxGuests={invitees}
+          onConfirm={(data) => {
+            // Submission behavior (where this data goes) is defined later.
+            console.log('RSVP guest details submitted:', data)
+          }}
         />
       )}
     </>

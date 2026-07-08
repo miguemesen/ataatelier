@@ -9,12 +9,14 @@ import ErrorScreen from './components/ErrorScreen'
 import InvitationCard from './components/InvitationCard'
 import ActionButtons from './components/ActionButtons'
 import MusicToggle from './components/MusicToggle'
+import RsvpConfirmModal from './components/RsvpConfirmModal'
 
 export default function RsvpPage() {
   const { status, config, basePath } = useEventConfig()
   const invitees = useInviteeCount()
   const [choiceMade, setChoiceMade] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(true)
+  const [showRsvpModal, setShowRsvpModal] = useState(false)
 
   const hasMusic = Boolean(config?.musicVideoId)
   const { playerReady, playUnmuted, pause } = useYoutubeMusic(config?.musicVideoId)
@@ -86,19 +88,29 @@ export default function RsvpPage() {
       />
 
       <div
-        className={`main-content ${showMainContent ? 'visible' : ''}`}
+        className={`main-content ${showMainContent ? 'visible' : ''} ${showRsvpModal ? 'blurred' : ''}`}
         style={bgUrl ? { backgroundImage: `url('${bgUrl}')` } : undefined}
       >
         {config && (
           <>
             <InvitationCard imageUrl={invitationUrl} invitees={invitees} />
             <ActionButtons
-              confirmarLink={config.confirmarLink}
               ubicacionLink={config.ubicacionLink}
+              onConfirmarClick={() => setShowRsvpModal(true)}
             />
           </>
         )}
       </div>
+
+      {config && (
+        <RsvpConfirmModal
+          visible={showRsvpModal}
+          onClose={() => setShowRsvpModal(false)}
+          confirmarLink={config.confirmarLink}
+          declineLink={config.declineLink}
+          deadlineText={config.rsvpDeadline}
+        />
+      )}
     </>
   )
 }

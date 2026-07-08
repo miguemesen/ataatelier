@@ -191,6 +191,10 @@ html, body {
   opacity: 1;
 }
 
+.main-content.blurred {
+  filter: blur(6px);
+}
+
 .invitation-card {
   width: 100%;
   max-width: 480px;
@@ -368,6 +372,107 @@ html, body {
 
 @media (min-width: 600px) {
   .main-content { padding-top: 4vh; }
+}
+
+/* ---------- RSVP CONFIRMATION MODAL ---------- */
+.rsvp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8vw;
+  background: rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.rsvp-modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rsvp-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 28px;
+  overflow: visible;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+.rsvp-modal-flower {
+  position: absolute;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.rsvp-modal-flower-top {
+  top: -14%;
+  left: -10%;
+}
+
+.rsvp-modal-flower-bottom {
+  bottom: -14%;
+  right: -10%;
+}
+
+.rsvp-modal-header {
+  position: relative;
+  background-color: #FFF4A3;
+  border-radius: 28px 28px 0 0;
+  padding: 20px 56px 20px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.rsvp-modal-header h2 {
+  margin: 0;
+  color: #333333;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-heading);
+}
+
+.rsvp-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: #333333;
+  cursor: pointer;
+  padding: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rsvp-modal-body {
+  background-color: #FFFCE6;
+  border-radius: 0 0 28px 28px;
+  padding: 26px 22px 30px;
+  text-align: center;
+}
+
+.rsvp-modal-body p {
+  margin: 0 0 20px;
+  color: #4d4d4d;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-body);
+  line-height: 1.35;
+}
+
+.rsvp-modal-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 /* ---------- POPPINS WEIGHT / STYLE UTILITIES ---------- */

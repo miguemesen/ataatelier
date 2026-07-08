@@ -1,25 +1,25 @@
 export default function RsvpConfirmModal({ visible, onClose, confirmarLink, declineLink, deadlineText }) {
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
-      <div className="rsvp-modal-card">
+      <div className="modal-card">
         <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-top" />
         <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-bottom" />
 
-        <div className="rsvp-modal-header">
+        <div className="modal-header">
           <h2>¿Nos acompañarás?</h2>
           <button type="button" className="rsvp-modal-close" onClick={onClose} aria-label="Cerrar">
             ×
           </button>
         </div>
 
-        <div className="rsvp-modal-body">
+        <div className="modal-body">
           <p>
             Por favor, confirmá tu asistencia
             <br />
             <span className="font-semibold">antes del {deadlineText}.</span>
           </p>
 
-          <div className="rsvp-modal-buttons">
+          <div className="modal-buttons">
             <a className="btn" href={confirmarLink || '#'} target="_blank" rel="noopener noreferrer">
               SÍ, ASISTIRÉ
             </a>

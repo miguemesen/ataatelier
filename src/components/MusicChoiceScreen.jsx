@@ -4,17 +4,17 @@ export default function MusicChoiceScreen({ visible, backgroundUrl, onChoose }) 
       className={`music-choice-screen ${visible ? '' : 'hidden'}`}
       style={backgroundUrl ? { backgroundImage: `url('${backgroundUrl}')` } : undefined}
     >
-      <div className="music-card">
-        <div className="music-card-header">
+      <div className="modal-card">
+        <div className="modal-header">
           <img src="/assets/gary.png" alt="" className="music-card-gary" />
           <h2>¡Ahoy!</h2>
           <img src="/assets/coral.png" alt="" className="music-card-coral music-card-coral-back" />
           <img src="/assets/coral.png" alt="" className="music-card-coral music-card-coral-front" />
         </div>
 
-        <div className="music-card-body">
+        <div className="modal-body">
           <p>¿Querés vivir la experiencia con música?</p>
-          <div className="choice-buttons">
+          <div className="modal-buttons">
             <button type="button" className="btn" onClick={() => onChoose(true)}>
               CONTINUAR CON MÚSICA
             </button>

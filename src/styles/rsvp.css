@@ -1,19 +1,19 @@
 :root {
   --turquoise: #6fd6cc;
   --turquoise-dark: #4fc0b5;
-
+ 
   /* ---------- TYPE SCALE ----------
      Change a value here and every element using that variable updates.
      Each includes a fluid clamp() so it scales down gracefully on
      narrow screens instead of overflowing. */
   --font-family-base: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-
+ 
   --weight-light: 300;
   --weight-regular: 400;
   --weight-semibold: 600;
-
-  --text-heading: clamp(30px, 8vw, 40px);   /* ~52pt spec — screen titles like "¡Ahoy!" */
-  --text-body: clamp(18px, 4.6vw, 22px);    /* ~34pt spec — paragraph/question text */
+ 
+  --text-heading: clamp(20px, 8vw, 25px);   /* ~52pt spec — screen titles like "¡Ahoy!" */
+  --text-body: clamp(15px, 4.6vw, 18px);    /* ~34pt spec — paragraph/question text */
   --text-button: clamp(15px, 4.2vw, 18px);  /* ~32pt spec — button labels */
   --text-overlay: clamp(14px, 4vw, 18px);   /* ~30pt spec — text overlaid on images */
 }
@@ -66,7 +66,7 @@ html, body {
   position: relative;
   background-color: #FFF4A3;
   border-radius: 28px 28px 0 0;
-  padding: 28px 20px 20px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,35 +83,35 @@ html, body {
 
 .music-card-gary {
   position: absolute;
-  left: -6%;
-  bottom: -18%;
-  width: 26%;
-  max-width: 110px;
+  left: -1%;
+  bottom: -45%;
+  width: 35%;        /* was 26% */
+  max-width: 150px;  /* was 110px */
   z-index: 2;
   transform: scaleX(-1);
 }
 
 .music-card-coral {
   position: absolute;
-  right: 4%;
-  bottom: -14%;
-  width: 24%;
-  max-width: 100px;
+  right: -10%;
+  bottom: -90%;
+  width: 95%;
+  max-width: 180px;
   z-index: 2;
 }
 
 .music-card-coral-back {
-  right: 16%;
-  width: 19%;
-  max-width: 80px;
-  bottom: -10%;
+  right: 1%;
+  width: 95%;
+  max-width: 180px;
+  bottom: -70%;
   opacity: 0.9;
 }
 
 .music-card-body {
   background-color: #FFFCE6;
   border-radius: 0 0 28px 28px;
-  padding: 26px 22px 28px;
+  padding: 30px 22px 28px;
   text-align: center;
 }
 
@@ -128,20 +128,21 @@ html, body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
 }
 
 .music-choice-btn {
   display: block;
-  width: 100%;
+  width: 80%;
   text-align: center;
   background-color: #ffffff;
   color: #8ededa;
-  border: 3px solid #8ededa;
+  border: 2px solid #8ededa;
   border-radius: 999px;
-  padding: 14px 18px;
+  padding: 5px 0px;
   font-family: var(--font-family-base);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-regular);
   font-size: var(--text-button);
   letter-spacing: 0.3px;
   cursor: pointer;
@@ -231,7 +232,7 @@ html, body {
 
 .invitation-spots-overlay {
   position: absolute;
-  top: 60%;
+  top: 68%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -240,7 +241,8 @@ html, body {
   align-items: center;
   text-align: center;
   color: #ffffff;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+  /* text-shadow: 0 1px 4px rgba(0,0,0,0.35); */
+  text-shadow: 2px 2px 2px rgba(107, 154, 196, 0.7);
   pointer-events: none;
 }
 
@@ -286,6 +288,7 @@ html, body {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   cursor: pointer;
+  font-family: inherit;
 }
 
 .btn:active {
@@ -399,13 +402,13 @@ html, body {
   font-weight: var(--weight-regular);
   font-style: normal;
 }
-
+ 
 .font-semibold {
   font-family: var(--font-family-base);
   font-weight: var(--weight-semibold);
   font-style: normal;
 }
-
+ 
 .font-light-italic {
   font-family: var(--font-family-base);
   font-weight: var(--weight-light);

@@ -15,7 +15,7 @@
   --text-heading: clamp(20px, 8vw, 25px);   /* ~52pt spec — screen titles like "¡Ahoy!" */
   --text-body: clamp(15px, 4.6vw, 18px);    /* ~34pt spec — paragraph/question text */
   --text-button: clamp(15px, 4.2vw, 18px);  /* ~32pt spec — button labels */
-  --text-overlay: clamp(14px, 4vw, 18px);   /* ~30pt spec — text overlaid on images */
+  --text-overlay: clamp(10px, 4vw, 15px);   /* ~30pt spec — text overlaid on images */
 }
 
 * { box-sizing: border-box; }

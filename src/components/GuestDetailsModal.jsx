@@ -4,6 +4,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
   const [guestCount, setGuestCount] = useState(maxGuests)
   const [guests, setGuests] = useState([])
   const [notes, setNotes] = useState('')
+  const [submitAttempted, setSubmitAttempted] = useState(false)
 
   // Whenever the selected count changes, resize the guests array,
   // keeping any names already typed for the rows that still exist.
@@ -25,8 +26,29 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
     })
   }
 
+  function isGuestFieldInvalid(index, field) {
+    return submitAttempted && !String(guests[index][field]).trim()
+  }
+
+  function fieldClass(baseClass, index, field) {
+    return `${baseClass}${isGuestFieldInvalid(index, field) ? ' invalid' : ''}`
+  }
+
   function handleSubmit(e) {
     e.preventDefault()
+
+    const hasEmptyField = guests.some(
+      (guest) =>
+        !guest.nombre.trim() ||
+        !guest.apellidos.trim() ||
+        !String(guest.edad).trim()
+    )
+
+    if (hasEmptyField) {
+      setSubmitAttempted(true)
+      return
+    }
+
     if (onConfirm) {
       onConfirm({ guestCount, guests, notes })
     }
@@ -48,7 +70,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
         </div>
 
         <div className="modal-body">
-          <form className="guest-form" onSubmit={handleSubmit}>
+          <form className="guest-form" onSubmit={handleSubmit} noValidate>
             <label className="guest-form-label" htmlFor="guest-count-select">
               ¿Cuántas personas van a asistir?
             </label>
@@ -71,21 +93,21 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
               <div className="guest-form-row" key={index}>
                 <input
                   type="text"
-                  className="guest-form-input"
+                  className={fieldClass('guest-form-input', index, 'nombre')}
                   placeholder="Nombre"
                   value={guest.nombre}
                   onChange={(e) => updateGuest(index, 'nombre', e.target.value)}
                 />
                 <input
                   type="text"
-                  className="guest-form-input"
+                  className={fieldClass('guest-form-input', index, 'apellidos')}
                   placeholder="Apellidos"
                   value={guest.apellidos}
                   onChange={(e) => updateGuest(index, 'apellidos', e.target.value)}
                 />
                 <input
                   type="number"
-                  className="guest-form-input guest-form-input-edad"
+                  className={fieldClass('guest-form-input guest-form-input-edad', index, 'edad')}
                   placeholder="Edad"
                   value={guest.edad}
                   onChange={(e) => updateGuest(index, 'edad', e.target.value)}
@@ -98,7 +120,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
             </label>
             <textarea
               className="guest-form-textarea"
-              placeholder=''
+              placeholder=""
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
             />

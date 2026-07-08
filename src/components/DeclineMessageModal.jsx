@@ -4,9 +4,20 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
   const [nombre, setNombre] = useState('')
   const [apellidos, setApellidos] = useState('')
   const [mensaje, setMensaje] = useState('')
+  const [submitAttempted, setSubmitAttempted] = useState(false)
+
+  function fieldClass(baseClass, value) {
+    return `${baseClass}${submitAttempted && !value.trim() ? ' invalid' : ''}`
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
+
+    if (!nombre.trim() || !apellidos.trim()) {
+      setSubmitAttempted(true)
+      return
+    }
+
     if (onSubmit) {
       onSubmit({ nombre, apellidos, mensaje })
     }
@@ -26,19 +37,19 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
         </div>
 
         <div className="modal-body">
-          <form className="guest-form" onSubmit={handleSubmit}>
+          <form className="guest-form" onSubmit={handleSubmit} noValidate>
             <label className="guest-form-label">¿Quién nos escribe?</label>
             <div className="guest-form-row">
               <input
                 type="text"
-                className="guest-form-input"
+                className={fieldClass('guest-form-input', nombre)}
                 placeholder="Nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
               <input
                 type="text"
-                className="guest-form-input"
+                className={fieldClass('guest-form-input', apellidos)}
                 placeholder="Apellidos"
                 value={apellidos}
                 onChange={(e) => setApellidos(e.target.value)}
@@ -50,7 +61,7 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
               className="guest-form-textarea"
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
-              placeholder=''
+              placeholder=""
             />
 
             <div className="modal-buttons">

@@ -535,6 +535,11 @@ html, body {
   border-color: #4d4d4d;
 }
 
+.guest-form-input.invalid,
+.guest-form-textarea.invalid {
+  border-color: #e05c5c;
+}
+
 .guest-form-select {
   appearance: none;
   -webkit-appearance: none;

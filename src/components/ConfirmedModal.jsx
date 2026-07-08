@@ -1,4 +1,6 @@
-export default function ConfirmedModal({ visible }) {
+export default function ConfirmedModal({ visible, variant = 'confirm' }) {
+  const isDecline = variant === 'decline'
+
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
@@ -14,8 +16,17 @@ export default function ConfirmedModal({ visible }) {
           />
 
           <div className="confirmed-text">
-            <p className="confirmed-label">ASISTENCIA CONFIRMADA</p>
-            <p className="confirmed-headline">¡Nos vemos en Fondo de Bikini!</p>
+            {isDecline ? (
+              <>
+                <p className="confirmed-label">MENSAJE ENVIADO</p>
+                <p className="confirmed-headline">¡Gracias por avisarnos!</p>
+              </>
+            ) : (
+              <>
+                <p className="confirmed-label">ASISTENCIA CONFIRMADA</p>
+                <p className="confirmed-headline">¡Nos vemos en Fondo de Bikini!</p>
+              </>
+            )}
           </div>
         </div>
       </div>

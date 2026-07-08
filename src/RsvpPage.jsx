@@ -23,6 +23,7 @@ export default function RsvpPage() {
   const [showGuestDetailsModal, setShowGuestDetailsModal] = useState(false)
   const [showDeclineModal, setShowDeclineModal] = useState(false)
   const [showConfirmedModal, setShowConfirmedModal] = useState(false)
+  const [confirmedVariant, setConfirmedVariant] = useState('confirm')
 
   const hasMusic = Boolean(config?.musicVideoId)
   const { playerReady, playUnmuted, pause } = useYoutubeMusic(config?.musicVideoId)
@@ -163,6 +164,7 @@ export default function RsvpPage() {
               notes: data.notes,
             })
             setShowGuestDetailsModal(false)
+            setConfirmedVariant('confirm')
             setShowConfirmedModal(true)
           }}
         />
@@ -179,11 +181,14 @@ export default function RsvpPage() {
               apellidos: data.apellidos,
               mensaje: data.mensaje,
             })
+            setShowDeclineModal(false)
+            setConfirmedVariant('decline')
+            setShowConfirmedModal(true)
           }}
         />
       )}
 
-      <ConfirmedModal visible={showConfirmedModal} />
+      <ConfirmedModal visible={showConfirmedModal} variant={confirmedVariant} />
     </>
   )
 }

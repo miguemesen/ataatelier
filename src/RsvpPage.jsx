@@ -11,6 +11,7 @@ import ActionButtons from './components/ActionButtons'
 import MusicToggle from './components/MusicToggle'
 import RsvpConfirmModal from './components/RsvpConfirmModal'
 import GuestDetailsModal from './components/GuestDetailsModal'
+import DeclineMessageModal from './components/DeclineMessageModal'
 
 export default function RsvpPage() {
   const { status, config, basePath } = useEventConfig()
@@ -19,6 +20,7 @@ export default function RsvpPage() {
   const [musicPlaying, setMusicPlaying] = useState(true)
   const [showRsvpModal, setShowRsvpModal] = useState(false)
   const [showGuestDetailsModal, setShowGuestDetailsModal] = useState(false)
+  const [showDeclineModal, setShowDeclineModal] = useState(false)
 
   const hasMusic = Boolean(config?.musicVideoId)
   const { playerReady, playUnmuted, pause } = useYoutubeMusic(config?.musicVideoId)
@@ -90,7 +92,7 @@ export default function RsvpPage() {
       />
 
       <div
-        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal) ? 'blurred' : ''}`}
+        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal || showDeclineModal) ? 'blurred' : ''}`}
         style={bgUrl ? { backgroundImage: `url('${bgUrl}')` } : undefined}
       >
         {config && (
@@ -112,7 +114,10 @@ export default function RsvpPage() {
             setShowRsvpModal(false)
             setShowGuestDetailsModal(true)
           }}
-          declineLink={config.declineLink}
+          onConfirmNo={() => {
+            setShowRsvpModal(false)
+            setShowDeclineModal(true)
+          }}
           deadlineText={config.rsvpDeadline}
         />
       )}
@@ -125,6 +130,17 @@ export default function RsvpPage() {
           onConfirm={(data) => {
             // Submission behavior (where this data goes) is defined later.
             console.log('RSVP guest details submitted:', data)
+          }}
+        />
+      )}
+
+      {config && (
+        <DeclineMessageModal
+          visible={showDeclineModal}
+          onClose={() => setShowDeclineModal(false)}
+          onSubmit={(data) => {
+            // Submission behavior (where this data goes) is defined later.
+            console.log('Decline message submitted:', data)
           }}
         />
       )}

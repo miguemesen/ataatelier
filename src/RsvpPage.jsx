@@ -12,6 +12,7 @@ import MusicToggle from './components/MusicToggle'
 import RsvpConfirmModal from './components/RsvpConfirmModal'
 import GuestDetailsModal from './components/GuestDetailsModal'
 import DeclineMessageModal from './components/DeclineMessageModal'
+import ConfirmedModal from './components/ConfirmedModal'
 
 export default function RsvpPage() {
   const { status, config, basePath } = useEventConfig()
@@ -21,6 +22,7 @@ export default function RsvpPage() {
   const [showRsvpModal, setShowRsvpModal] = useState(false)
   const [showGuestDetailsModal, setShowGuestDetailsModal] = useState(false)
   const [showDeclineModal, setShowDeclineModal] = useState(false)
+  const [showConfirmedModal, setShowConfirmedModal] = useState(false)
 
   const hasMusic = Boolean(config?.musicVideoId)
   const { playerReady, playUnmuted, pause } = useYoutubeMusic(config?.musicVideoId)
@@ -92,7 +94,7 @@ export default function RsvpPage() {
       />
 
       <div
-        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal || showDeclineModal) ? 'blurred' : ''}`}
+        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal || showDeclineModal || showConfirmedModal) ? 'blurred' : ''}`}
         style={bgUrl ? { backgroundImage: `url('${bgUrl}')` } : undefined}
       >
         {config && (
@@ -130,6 +132,8 @@ export default function RsvpPage() {
           onConfirm={(data) => {
             // Submission behavior (where this data goes) is defined later.
             console.log('RSVP guest details submitted:', data)
+            setShowGuestDetailsModal(false)
+            setShowConfirmedModal(true)
           }}
         />
       )}
@@ -144,6 +148,8 @@ export default function RsvpPage() {
           }}
         />
       )}
+
+      <ConfirmedModal visible={showConfirmedModal} />
     </>
   )
 }

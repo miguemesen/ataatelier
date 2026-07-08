@@ -6,15 +6,15 @@ export default function ConfirmedModal({ visible, variant = 'confirm' }) {
       <div className="modal-card">
         <div className="modal-header" style={{padding: '31px 20px'}}>
           <img src="/assets/florcita-azul.png" alt="" className="confirmed-flower" />
-        </div>
-
-        <div className="modal-body confirmed-body">
           <img
             src="/assets/spongebob-confirmado.png"
             alt=""
             className="confirmed-character"
           />
+        </div>
 
+        <div className="modal-body confirmed-body">
+          <div style={{width: '120px', height:'150px'}}/>
           <div className="confirmed-text">
             {isDecline ? (
               <>

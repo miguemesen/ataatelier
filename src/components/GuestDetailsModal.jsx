@@ -120,7 +120,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
             </label>
             <textarea
               className="guest-form-textarea"
-              placeholder=""
+              placeholder="Contanos..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
             />

@@ -93,9 +93,19 @@ export default function RsvpPage() {
         onToggle={toggleMusic}
       />
 
+      {/* Fixed background layer: sized to the viewport itself (not the
+          content box), so it always fully covers the page regardless of
+          whether the invitation content is taller or shorter than the
+          screen. Content scrolls on top of this. */}
+      {bgUrl && (
+        <div
+          className="page-background"
+          style={{ backgroundImage: `url('${bgUrl}')` }}
+        />
+      )}
+
       <div
         className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal || showDeclineModal || showConfirmedModal) ? 'blurred' : ''}`}
-        style={bgUrl ? { backgroundImage: `url('${bgUrl}')` } : undefined}
       >
         {config && (
           <>

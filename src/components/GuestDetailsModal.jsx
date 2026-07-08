@@ -37,8 +37,8 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
-        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-top" />
-        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-bottom" />
+        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-emocion-venga-top" />
+        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-emocion-venga-bottom" />
 
         <div className="modal-header">
           <h2>¡Qué emoción que vengás!</h2>
@@ -65,7 +65,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
               ))}
             </select>
 
-            <p className="guest-form-label">¿Cómo se llaman?</p>
+            <label className="guest-form-label">¿Cómo se llaman?</label>
 
             {guests.map((guest, index) => (
               <div className="guest-form-row" key={index}>
@@ -93,9 +93,9 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
               </div>
             ))}
 
-            <p className="guest-form-label">
+            <label className="guest-form-label">
               ¿Hay alguna alergia o restricción alimentaria que debamos tomar en cuenta?
-            </p>
+            </label>
             <textarea
               className="guest-form-textarea"
               value={notes}

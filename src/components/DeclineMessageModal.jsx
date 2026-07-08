@@ -15,8 +15,8 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
-        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-top" />
-        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-bottom" />
+        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-gracias-avisarnos-top" />
+        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-gracias-avisarnos-bottom" />
 
         <div className="modal-header">
           <h2>¡Gracias por avisarnos!</h2>
@@ -27,7 +27,7 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
 
         <div className="modal-body">
           <form className="guest-form" onSubmit={handleSubmit}>
-            <p className="guest-form-label">¿Quién nos escribe?</p>
+            <label className="guest-form-label">¿Quién nos escribe?</label>
             <div className="guest-form-row">
               <input
                 type="text"
@@ -45,7 +45,7 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
               />
             </div>
 
-            <p className="guest-form-label">Dejale un mensajito a Aura:</p>
+            <label className="guest-form-label">Dejale un mensajito a Aura:</label>
             <textarea
               className="guest-form-textarea"
               value={mensaje}

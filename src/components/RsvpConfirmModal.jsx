@@ -2,8 +2,8 @@ export default function RsvpConfirmModal({ visible, onClose, onConfirmYes, onCon
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
-        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-top" />
-        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-bottom" />
+        <img src="/assets/florcita-arriba.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-nos-acompana-top" />
+        <img src="/assets/florcita-abajo.png" alt="" className="rsvp-modal-flower rsvp-modal-flower-nos-acompana-bottom" />
 
         <div className="modal-header">
           <h2>¿Nos acompañarás?</h2>

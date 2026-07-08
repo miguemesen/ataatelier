@@ -609,7 +609,7 @@ html, body {
    yellow strip behind the flower) and a custom content layout in the body. */
 .confirmed-flower {
   position: absolute;
-  top: 20px;
+  top: 15px;
   right: 10px;
   width: 90px;
   z-index: 2;

@@ -107,9 +107,14 @@ async function handleRsvpPage(request, env) {
           const config = await configResponse.json();
           if (config.pageTitle) title = config.pageTitle;
           if (config.ogDescription) description = config.ogDescription;
-          if (config.invitationImage) {
+          // Prefer a dedicated social-preview image (landscape-shaped,
+          // built for link previews) over the invitation card itself
+          // (portrait-shaped, which WhatsApp/Facebook often render as a
+          // small cropped square instead of a proper large preview).
+          const previewImage = config.socialPreviewImage || config.invitationImage;
+          if (previewImage) {
             imageUrl = new URL(
-              `/events/${eventSlug}/${config.invitationImage}`,
+              `/events/${eventSlug}/${previewImage}`,
               url.origin
             ).toString();
           }
@@ -132,6 +137,11 @@ async function handleRsvpPage(request, env) {
       `<meta property="og:title" content="${escapeHtml(title)}">`,
       `<meta property="og:description" content="${escapeHtml(description)}">`,
       imageUrl ? `<meta property="og:image" content="${escapeHtml(imageUrl)}">` : '',
+      // Telling WhatsApp/Facebook the image's actual dimensions helps them
+      // pick the large-preview layout instead of falling back to a small
+      // square thumbnail crop.
+      imageUrl ? `<meta property="og:image:width" content="1200">` : '',
+      imageUrl ? `<meta property="og:image:height" content="747">` : '',
       `<meta name="twitter:card" content="summary_large_image">`,
       `<meta name="twitter:title" content="${escapeHtml(title)}">`,
       `<meta name="twitter:description" content="${escapeHtml(description)}">`,

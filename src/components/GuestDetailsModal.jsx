@@ -84,7 +84,7 @@ export default function GuestDetailsModal({ visible, onClose, maxGuests, onConfi
                   onChange={(e) => updateGuest(index, 'apellidos', e.target.value)}
                 />
                 <input
-                  type="text"
+                  type="number"
                   className="guest-form-input guest-form-input-edad"
                   placeholder="Edad"
                   value={guest.edad}

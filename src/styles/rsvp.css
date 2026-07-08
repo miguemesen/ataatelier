@@ -1,6 +1,21 @@
 :root {
   --turquoise: #6fd6cc;
   --turquoise-dark: #4fc0b5;
+
+  /* ---------- TYPE SCALE ----------
+     Change a value here and every element using that variable updates.
+     Each includes a fluid clamp() so it scales down gracefully on
+     narrow screens instead of overflowing. */
+  --font-family-base: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+
+  --text-heading: clamp(30px, 8vw, 40px);   /* ~52pt spec — screen titles like "¡Ahoy!" */
+  --text-body: clamp(18px, 4.6vw, 22px);    /* ~34pt spec — paragraph/question text */
+  --text-button: clamp(15px, 4.2vw, 18px);  /* ~32pt spec — button labels */
+  --text-overlay: clamp(14px, 4vw, 18px);   /* ~30pt spec — text overlaid on images */
 }
 
 * { box-sizing: border-box; }
@@ -10,8 +25,8 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
   overflow-x: hidden;
 }
 
@@ -61,9 +76,9 @@ html, body {
 .music-card-header h2 {
   margin: 0;
   color: #333333;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: clamp(30px, 8vw, 40px);
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-heading);
 }
 
 .music-card-gary {
@@ -103,9 +118,9 @@ html, body {
 .music-card-body p {
   margin: 0 0 20px;
   color: #4d4d4d;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: clamp(18px, 4.6vw, 22px);
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-body);
   line-height: 1.35;
 }
 
@@ -125,9 +140,9 @@ html, body {
   border: 3px solid #8ededa;
   border-radius: 999px;
   padding: 14px 18px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: clamp(15px, 4.2vw, 18px);
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-button);
   letter-spacing: 0.3px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -216,7 +231,7 @@ html, body {
 
 .invitation-spots-overlay {
   position: absolute;
-  top: 68%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -230,16 +245,16 @@ html, body {
 }
 
 .invitation-spots-line-1 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: clamp(14px, 4vw, 18px);
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-overlay);
   line-height: 1.3;
 }
 
 .invitation-spots-line-2 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: clamp(14px, 4vw, 18px);
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-overlay);
   line-height: 1.3;
 }
 
@@ -257,9 +272,9 @@ html, body {
   width: 100%;
   text-align: center;
   text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-button);
   letter-spacing: 0.5px;
   padding: 16px 20px;
   border-radius: 999px;
@@ -271,7 +286,6 @@ html, body {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   cursor: pointer;
-  font-family: inherit;
 }
 
 .btn:active {
@@ -381,19 +395,19 @@ html, body {
 
 /* ---------- POPPINS WEIGHT / STYLE UTILITIES ---------- */
 .font-regular {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-regular);
   font-style: normal;
 }
 
 .font-semibold {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-semibold);
   font-style: normal;
 }
 
 .font-light-italic {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
+  font-family: var(--font-family-base);
+  font-weight: var(--weight-light);
   font-style: italic;
 }

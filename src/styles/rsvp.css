@@ -515,7 +515,7 @@ html, body {
 .guest-form-input,
 .guest-form-textarea {
   width: 100%;
-  border: 1.5px solid #cfcfcf;
+  border: 2px solid #cfcfcf;
   border-radius: 14px;
   padding: 12px 14px;
   font-family: var(--font-family-base);
@@ -524,6 +524,15 @@ html, body {
   color: #333333;
   background-color: #ffffff;
   box-sizing: border-box;
+  outline: none;
+}
+
+.guest-form-select:focus,
+.guest-form-input:focus,
+.guest-form-textarea:focus,
+.guest-form-input:not(:placeholder-shown),
+.guest-form-textarea:not(:placeholder-shown) {
+  border-color: #4d4d4d;
 }
 
 .guest-form-select {

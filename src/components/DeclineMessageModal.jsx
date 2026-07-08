@@ -50,6 +50,7 @@ export default function DeclineMessageModal({ visible, onClose, onSubmit }) {
               className="guest-form-textarea"
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
+              placeholder=''
             />
 
             <div className="modal-buttons">

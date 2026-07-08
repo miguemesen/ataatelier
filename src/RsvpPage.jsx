@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useEventConfig } from './hooks/useEventConfig'
 import { useImagePreloader } from './hooks/useImagePreloader'
 import { useYoutubeMusic } from './hooks/useYoutubeMusic'
+import { useInviteeCount } from './hooks/useInviteeCount'
 import MusicChoiceScreen from './components/MusicChoiceScreen'
 import LoadingScreen from './components/LoadingScreen'
 import ErrorScreen from './components/ErrorScreen'
@@ -11,6 +12,7 @@ import MusicToggle from './components/MusicToggle'
 
 export default function RsvpPage() {
   const { status, config, basePath } = useEventConfig()
+  const invitees = useInviteeCount()
   const [choiceMade, setChoiceMade] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(true)
 
@@ -89,7 +91,7 @@ export default function RsvpPage() {
       >
         {config && (
           <>
-            <InvitationCard imageUrl={invitationUrl} />
+            <InvitationCard imageUrl={invitationUrl} invitees={invitees} />
             <ActionButtons
               confirmarLink={config.confirmarLink}
               ubicacionLink={config.ubicacionLink}

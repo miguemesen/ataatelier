@@ -96,7 +96,11 @@ export default function RsvpPage() {
       {/* Fixed background layer: sized to the viewport itself (not the
           content box), so it always fully covers the page regardless of
           whether the invitation content is taller or shorter than the
-          screen. Content scrolls on top of this. */}
+          screen. Content scrolls on top of this. Blurring when a modal is
+          open is handled by backdrop-filter on the modal overlay itself
+          (see .rsvp-modal-overlay / .music-choice-screen in the CSS),
+          rather than by toggling a blur class here — that avoids any
+          seam between separately-blurred layers. */}
       {bgUrl && (
         <div
           className="page-background"
@@ -104,9 +108,7 @@ export default function RsvpPage() {
         />
       )}
 
-      <div
-        className={`main-content ${showMainContent ? 'visible' : ''} ${(showRsvpModal || showGuestDetailsModal || showDeclineModal || showConfirmedModal) ? 'blurred' : ''}`}
-      >
+      <div className={`main-content ${showMainContent ? 'visible' : ''}`}>
         {config && (
           <>
             <InvitationCard imageUrl={invitationUrl} invitees={invitees} />

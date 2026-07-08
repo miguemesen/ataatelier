@@ -15,7 +15,7 @@ import DeclineMessageModal from './components/DeclineMessageModal'
 import ConfirmedModal from './components/ConfirmedModal'
 
 export default function RsvpPage() {
-  const { status, config, basePath } = useEventConfig()
+  const { status, config, basePath, slug } = useEventConfig()
   const invitees = useInviteeCount()
   const [choiceMade, setChoiceMade] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(true)
@@ -61,6 +61,21 @@ export default function RsvpPage() {
       playUnmuted()
     } else {
       pause()
+    }
+  }
+
+  async function submitRsvp(payload) {
+    try {
+      const res = await fetch('/api/rsvp-submit', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ eventSlug: slug, ...payload }),
+      })
+      if (!res.ok) {
+        console.error('RSVP submission failed:', await res.text())
+      }
+    } catch (err) {
+      console.error('RSVP submission error:', err)
     }
   }
 
@@ -142,8 +157,11 @@ export default function RsvpPage() {
           onClose={() => setShowGuestDetailsModal(false)}
           maxGuests={invitees}
           onConfirm={(data) => {
-            // Submission behavior (where this data goes) is defined later.
-            console.log('RSVP guest details submitted:', data)
+            submitRsvp({
+              type: 'confirm',
+              guests: data.guests,
+              notes: data.notes,
+            })
             setShowGuestDetailsModal(false)
             setShowConfirmedModal(true)
           }}
@@ -155,8 +173,12 @@ export default function RsvpPage() {
           visible={showDeclineModal}
           onClose={() => setShowDeclineModal(false)}
           onSubmit={(data) => {
-            // Submission behavior (where this data goes) is defined later.
-            console.log('Decline message submitted:', data)
+            submitRsvp({
+              type: 'decline',
+              nombre: data.nombre,
+              apellidos: data.apellidos,
+              mensaje: data.mensaje,
+            })
           }}
         />
       )}

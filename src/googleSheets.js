@@ -24,8 +24,17 @@ function base64UrlEncodeString(str) {
 
 // Converts a PEM-formatted private key (as stored in the Google service
 // account JSON file) into a CryptoKey usable for signing.
+//
+// Handles two possible input shapes for the same key, since they behave
+// differently depending on where the secret was set:
+//   - Real newline characters (e.g. when a .env-style parser like
+//     wrangler's .dev.vars converts a quoted "\n" into an actual newline)
+//   - Literal backslash-n text — the two characters \ and n — which is
+//     what you get if that same string is pasted as-is into a dashboard
+//     secret field with no such conversion happening.
 async function importPrivateKey(pem) {
   const pemBody = pem
+    .replace(/\\n/g, '\n')
     .replace(/-----BEGIN PRIVATE KEY-----/, '')
     .replace(/-----END PRIVATE KEY-----/, '')
     .replace(/\s+/g, '');

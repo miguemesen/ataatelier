@@ -2,7 +2,7 @@ export default function ConfirmedModal({ visible }) {
   return (
     <div className={`rsvp-modal-overlay ${visible ? 'visible' : ''}`}>
       <div className="modal-card">
-        <div className="modal-header">
+        <div className="modal-header" style={{padding: '31px 20px'}}>
           <img src="/assets/florcita-azul.png" alt="" className="confirmed-flower" />
         </div>
 

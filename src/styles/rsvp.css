@@ -129,6 +129,7 @@ html, body {
   text-align: center;
   overflow-y: auto;
   min-height: 0;
+  overflow: visible;
 }
 
 .modal-body p {
@@ -559,7 +560,7 @@ html, body {
    yellow strip behind the flower) and a custom content layout in the body. */
 .confirmed-flower {
   position: absolute;
-  top: -10px;
+  top: 20px;
   right: 10px;
   width: 90px;
   z-index: 2;
@@ -570,19 +571,24 @@ html, body {
   align-items: center;
   gap: 16px;
   text-align: left;
+  padding-bottom: 15px;
+  padding-top: 0;
 }
 
 .confirmed-character {
+  position: relative;
+  top: -15px;
   width: 38%;
   max-width: 150px;
   flex-shrink: 0;
+  z-index: 2;
 }
 
 .confirmed-text {
   flex: 1;
 }
 
-.confirmed-label {
+.confirmed-body .confirmed-label {
   margin: 0 0 6px;
   color: #333333;
   font-family: var(--font-family-base);
@@ -591,11 +597,11 @@ html, body {
   letter-spacing: 0.5px;
 }
 
-.confirmed-headline {
+.confirmed-body .confirmed-headline {
   margin: 0;
-  color: #f27a9d;
+  color: #ffabb3;
   font-family: var(--font-family-base);
   font-weight: var(--weight-semibold);
-  font-size: var(--text-body);
+  font-size: var(--text-heading);
   line-height: 1.3;
 }

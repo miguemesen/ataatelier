@@ -15,10 +15,10 @@ export default function MusicChoiceScreen({ visible, backgroundUrl, onChoose }) 
         <div className="music-card-body">
           <p>¿Querés vivir la experiencia con música?</p>
           <div className="choice-buttons">
-            <button type="button" className="music-choice-btn" onClick={() => onChoose(true)}>
+            <button type="button" className="btn" onClick={() => onChoose(true)}>
               CONTINUAR CON MÚSICA
             </button>
-            <button type="button" className="music-choice-btn" onClick={() => onChoose(false)}>
+            <button type="button" className="btn" onClick={() => onChoose(false)}>
               CONTINUAR SIN MÚSICA
             </button>
           </div>
